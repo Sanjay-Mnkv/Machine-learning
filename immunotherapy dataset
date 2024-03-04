@@ -1,0 +1,29 @@
+#!/bin/python3
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix,accuracy_score
+import pandas as pd
+import matplotlib.pyplot as plt
+file_path='home/sw900b2_sanjay/ML4/Immunotherapy.csv'
+data=pd.read_csv(file_path)
+X=data[['sex','age','Time','Number_of_Warts','Type','Area','induration_diameter','Result_of_Treatment']]
+y=data['success_of_the_treatment']
+X_train,X_test,y_train,y_test=train_test_split(X,y,testsize=0.2)
+knn_classifier=KNeighborsClassifier(n_neighbors=3)
+knn_classifier.fit(X_train,y_train)
+y_pred=knn_classifier.predict(X_test)
+conf_matrix=confusion_matrix(y_test,y_pred)
+print(conf_matrix)
+accuracy=accuracy_score(y_test,y_pred)
+print(accuracy)
+k_values=[1,3,5,7,9]
+for k in k_values:
+    knn_classifier=KNeighborsClassifier(n_neighbors=k)
+    knn_classifier.fit(X_train,y_train)y_pred=knn_classifier.predict(X_test)
+    accuracy=accuracy_score(y_test,y_pred)
+    accuracies.append(accuracy)
+    plt.plot(k_vales,accuracies,marker='o')
+    plt.title('KNN classifier')
+    plt.xlabel('Number of Neighbors (k)')
+    plt.ylabel('accuracy')
+    plt.show()
+
