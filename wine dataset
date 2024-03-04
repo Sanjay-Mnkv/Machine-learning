@@ -1,0 +1,33 @@
+#!/bin/python3
+from sklearn.datasets import load_wine
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix,accuracy_score
+from sklearn.model_selection import train_test_split
+
+wine=load_wine()
+X=wine.data
+y=wine.target
+
+
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2)
+
+print(wine.feature_names)
+
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+
+
+
+knn=KNeighborsClassifier(n_neighbors=3)
+
+knn.fit(X_train,y_train)
+
+p=knn.predict(X_test)
+
+print(y_test)
+print(p)
+
+print(confusion_matrix(y_test,p))
+print(accuracy_score(y_test,p))
